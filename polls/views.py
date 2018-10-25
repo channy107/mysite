@@ -9,17 +9,18 @@ def input(request):
 
 def add_question(request):
     text = request.POST['text']
-    q = Question(
-        question_text=text,
-        pub_date=timezone.now())
-    q.save()
+    # q = Question(
+    #     question_text=text,
+    #     pub_date=timezone.now())
+    # q.save()
     # return render(request, 'polls/.html', {})
     return HttpResponse('입력완료')
 
 
-def data(request):
+def data(request, email, number):
     value = request.GET['user_name']
-    return HttpResponse
+    return HttpResponse(
+        value + email + str(number))
 
 def vote(request):
     choice = request.POST['choice']
@@ -39,3 +40,8 @@ def index(request):
 
     list = Question.objects.all()
     return render(request, 'polls/index.html', {'question': list})
+
+def result(request, id):
+    question = Question.objects.get(pk=id)
+    return render(request, 'polls/result.html',
+                  {'question': question})
